@@ -27,4 +27,14 @@
 		<context:exclude-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
+	
+	<!-- Oracle DataSource -->
+	<bean id="oracleDatasource"
+		class="oracle.jdbc.pool.OracleDataSource">
+		<property name="URL" value="jdbc:oracle:thin:@localhost:1521:xe" />
+		<property name="user" value="himedia" />
+		<property name="password" value="himedia" />
+		<property name="implicitCachingEnabled" value="true" />
+		<qualifier value="main-db" />	
+	</bean>
 </beans>

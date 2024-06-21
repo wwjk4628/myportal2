@@ -62,6 +62,36 @@
 	    <artifactId>jakarta.servlet.jsp.jstl</artifactId>
 	    <version>3.0.1</version>
 	</dependency>
+	
+	<!-- Spring JDBC -->
+	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-jdbc</artifactId>
+	    <version>${springframework-version}</version>
+	</dependency>
+	
+	<!-- ojdbc -->
+	<dependency>
+	    <groupId>com.oracle.database.jdbc</groupId>
+	    <artifactId>ojdbc11</artifactId>
+	    <version>23.4.0.24.05</version>
+	</dependency>
+	
+	<!-- MyBatis -->
+	<dependency>
+	    <groupId>org.mybatis</groupId>
+	    <artifactId>mybatis</artifactId>
+	    <version>3.5.16</version>
+	</dependency>
+	
+	<!-- MyBatis Spring -->
+	<dependency>
+	    <groupId>org.mybatis</groupId>
+	    <artifactId>mybatis-spring</artifactId>
+	    <version>3.0.3</version>
+	</dependency>
+
+
 
   </dependencies>
   
