@@ -26,8 +26,7 @@ public class GuestbookServiceImpl implements GuestbookService {
 
 	@Override
 	public boolean deleteMessage(GuestbookVo vo) {
-		// TODO Auto-generated method stub
-		return false;
+		return 1 == guestbookDao.delete(vo);
 	}
 
 }

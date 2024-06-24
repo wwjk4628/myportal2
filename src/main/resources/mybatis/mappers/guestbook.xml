@@ -18,4 +18,10 @@
 		INSERT into guestbook (no, name, password, content) 
 		VALUES(#{no}, #{name}, #{password}, #{content})
 	</insert>
+	
+	<!-- 게시물 삭제 (DELETE) -->
+	<delete id="delete" parameterType="GuestbookVo">
+	DELETE FROM guestbook
+	WHERE no = #{no} AND password = #{password}
+	</delete>
 </mapper>

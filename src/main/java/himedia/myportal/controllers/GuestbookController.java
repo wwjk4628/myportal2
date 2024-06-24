@@ -46,5 +46,13 @@ public class GuestbookController {
 		model.addAttribute("no", no);
 		return "guestbook/deleteform";
 	}
+	
+	//	/guestbook/delete (POST)
+	@PostMapping("/delete")
+	public String delete(@ModelAttribute GuestbookVo vo) {
+		boolean success = guestbookService.deleteMessage(vo);
+		System.out.println("Delete Result: " + success);
+		return "redirect:/guestbook";
+	}
 }
 
