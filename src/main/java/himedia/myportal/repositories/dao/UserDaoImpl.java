@@ -1,5 +1,8 @@
 package himedia.myportal.repositories.dao;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -27,10 +30,17 @@ public class UserDaoImpl implements UserDao {
 		return null;
 	}
 
+	//	로그인
 	@Override
 	public UserVo selectUser(String email, String password) {
-		// TODO Auto-generated method stub
-		return null;
+		// mybatis parameterType="map"으로 전달하기
+		Map<String, String> userMap = new HashMap<>();
+		userMap.put("email", email);
+		userMap.put("password", password);
+		
+		UserVo userVo = 
+			sqlSession.selectOne("users.selectUserByEmailAndPassword", userMap);
+		return userVo;
 	}
 
 }

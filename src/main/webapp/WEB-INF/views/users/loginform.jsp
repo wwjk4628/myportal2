@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,13 +9,13 @@
 <!-- TODO: 현재 페이지에 적절한 CSS를 임포트하십시오. -->
 <link type="text/css" 
 	rel="stylesheet" 
-	href="<%= request.getContextPath() %>/css/users.css"/>
+	href="<c:url value="/css/users.css" />"/>
 </head>
 <body>
 	<form id="login-form" 
 		name="loginform" 
 		method="POST" 
-		action="">
+		action="<c:url value="/users/login" />">
 		
 		<label class="block-label" for="email">이메일</label> 
 		<input id="email" name="email" type="text" value=""> 

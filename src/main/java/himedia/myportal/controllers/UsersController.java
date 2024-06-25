@@ -6,9 +6,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import himedia.myportal.repositories.vo.UserVo;
 import himedia.myportal.services.UserService;
+import jakarta.servlet.http.HttpSession;
 
 @RequestMapping("/users")
 @Controller
@@ -43,5 +45,51 @@ public class UsersController {
 	@RequestMapping("/joinsuccess")
 	public String joinSuccess() {
 		return "users/joinsuccess";
+	}
+	
+	//	로그인 폼 페이지
+	@GetMapping("/login")
+	public String loginForm() {
+		return "users/loginform";
+	}
+	
+	//	로그인 액션 
+	@PostMapping("/login")
+	public String loginAction(
+			@RequestParam(value="email", 
+						required=false,
+						defaultValue = "") String email,
+			@RequestParam(value="password", 
+						required=false,
+						defaultValue = "") String password,
+			HttpSession session) {
+		System.out.println("email:" + email);
+		System.out.println("password:" + password);
+		
+		if (email.length() == 0 || password.length() == 0) {
+			System.out.println("email 혹은 password가 입력되지 않음");
+			return "redirect:/users/login";
+		}
+		
+		//	email과 password 이용, 사용자 정보 질의
+		UserVo authUser = userService.getUser(email, password);
+		
+		if (authUser != null) {
+			//	로그인 처리
+			session.setAttribute("authUser", authUser);
+			//	홈페이지로 이동
+			return "redirect:/";
+		} else {
+			return "redirect:/users/login";
+		}
+	}
+	
+	//	로그아웃
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute("authUser");
+		session.invalidate();
+		
+		return "redirect:/";
 	}
 }
