@@ -20,8 +20,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserVo getUser(String email) {
-		// TODO Auto-generated method stub
-		return null;
+		UserVo userVo = userDao.selectUser(email);
+		System.out.println("Service UserVo: " + userVo);
+		return userVo;
 	}
 
 	@Override

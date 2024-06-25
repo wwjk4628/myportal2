@@ -26,8 +26,9 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public UserVo selectUser(String email) {
-		// TODO Auto-generated method stub
-		return null;
+		UserVo userVo = sqlSession.selectOne("users.selectUserByEmail", email);
+		System.out.println("DAO UserVo: " + userVo);
+		return userVo;
 	}
 
 	//	로그인
