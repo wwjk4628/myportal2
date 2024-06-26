@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import himedia.myportal.repositories.vo.BoardVo;
 import himedia.myportal.repositories.vo.UserVo;
@@ -36,11 +37,13 @@ public class BoardController {
 	@GetMapping("/{no}")
 	public String view(@PathVariable("no") Long no, 
 			Model model,
-			HttpSession session) {
+			HttpSession session,
+			RedirectAttributes redirectAttributes) {
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		
 		if (authUser == null) {
 			//	홈 화면으로 리다이렉트
+			redirectAttributes.addFlashAttribute("errorMsg", "로그인 되지 않았습니다.");
 			return "redirect:/";
 		}
 		
@@ -53,10 +56,12 @@ public class BoardController {
 	
 	//	작성 폼
 	@GetMapping("/write")
-	public String writeForm(HttpSession session) {
+	public String writeForm(HttpSession session,
+			RedirectAttributes redirectAttributes) {
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		if (authUser == null) {
 			//	홈 화면으로 리다이렉트
+			redirectAttributes.addFlashAttribute("errorMsg", "로그인이 되지 않았습니다.");
 			return "redirect:/";
 		}
 		return "board/write";
@@ -65,9 +70,11 @@ public class BoardController {
 	//	작성 액션
 	@PostMapping("/write")
 	public String writeAction(@ModelAttribute BoardVo boardVo,
-			HttpSession session) {
+			HttpSession session,
+			RedirectAttributes redirectAttributes) {
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		if (authUser == null) {
+			redirectAttributes.addFlashAttribute("errorMsg", "로그인이 되지 않았습니다.");
 			return "redirect:/";
 		}
 		
@@ -80,9 +87,11 @@ public class BoardController {
 	//	편집 폼
 	@GetMapping("/{no}/modify")
 	public String modifyForm(@PathVariable("no") Long no, Model model,
-			HttpSession session) {
+			HttpSession session,
+			RedirectAttributes redirectAttributes) {
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		if (authUser == null) {
+			redirectAttributes.addFlashAttribute("errorMsg", "로그인이 되지 않았습니다.");
 			return "redirect:/";
 		}
 		BoardVo vo = boardService.getContent(no);
@@ -93,9 +102,11 @@ public class BoardController {
 	//	편집 액션
 	@PostMapping("/modify")
 	public String modifyAction(@ModelAttribute BoardVo updatedVo,
-			HttpSession session) {
+			HttpSession session,
+			RedirectAttributes redirectAttributes) {
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		if (authUser == null) {
+			redirectAttributes.addFlashAttribute("errorMsg", "로그인이 되지 않았습니다.");
 			return "redirect:/";
 		}
 		//	기존 게시물 받아오기
@@ -107,4 +118,20 @@ public class BoardController {
 		
 		return "redirect:/board";
 	}
+	
+	//	게시물 삭제
+	@RequestMapping("/{no}/delete")
+	public String deleteAction(@PathVariable("no") Long no, HttpSession session,
+			RedirectAttributes redirectAttributes) {
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		if (authUser == null) {
+			redirectAttributes.addFlashAttribute("errorMsg", "로그인이 되지 않았습니다.");
+			return "redirect:/";
+		}
+		
+		boardService.delete(no, authUser.getNo());
+		
+		return "redirect:/board";
+	}
+	
 }

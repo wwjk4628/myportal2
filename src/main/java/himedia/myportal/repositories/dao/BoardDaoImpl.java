@@ -1,6 +1,8 @@
 package himedia.myportal.repositories.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,15 +15,15 @@ import himedia.myportal.repositories.vo.BoardVo;
 public class BoardDaoImpl implements BoardDao {
 	@Autowired
 	private SqlSession sqlSession;
-	
-	//	게시물 목록
+
+	// 게시물 목록
 	@Override
 	public List<BoardVo> selectAll() {
 		List<BoardVo> list = sqlSession.selectList("board.selectAll");
 		return list;
 	}
 
-	//	게시물 작성 액션
+	// 게시물 작성 액션
 	@Override
 	public int insert(BoardVo boardVo) {
 		try {
@@ -35,7 +37,7 @@ public class BoardDaoImpl implements BoardDao {
 
 	@Override
 	public BoardVo getContent(Long no) {
-		
+
 		BoardVo boardVo = sqlSession.selectOne("board.getContent", no);
 		return boardVo;
 	}
@@ -53,8 +55,21 @@ public class BoardDaoImpl implements BoardDao {
 
 	@Override
 	public int increaseHitCount(Long no) {
-		//		조회 수 증가
+		// 조회 수 증가
 		return sqlSession.update("increaseHitCount", no);
+	}
+
+	@Override
+	public int delete(Long no, Long userNo) {
+		try {
+			Map<String, Long> map = new HashMap<>();
+			map.put("no", no);
+			map.put("userNo", userNo);
+			return sqlSession.delete("board.deleteByUserNo", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new BoardDaoException("게시물 삭제 중 오류 발생!");
+		}	
 	}
 
 }
