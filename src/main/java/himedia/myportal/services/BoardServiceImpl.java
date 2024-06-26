@@ -21,14 +21,15 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public BoardVo getContent(Long no) {
+		boardDao.increaseHitCount(no);
 		BoardVo boardVo = boardDao.getContent(no);
 		return boardVo;
 	}
 
 	@Override
 	public boolean write(BoardVo boardVo) {
-		// TODO Auto-generated method stub
-		return false;
+		int insertedCount = boardDao.insert(boardVo);
+		return insertedCount == 1;
 	}
 
 	@Override

@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import himedia.myportal.repositories.vo.BoardVo;
@@ -47,5 +49,31 @@ public class BoardController {
 		System.out.println("vo:" + boardVo);
 		model.addAttribute("vo", boardVo);
 		return "board/view";
+	}
+	
+	//	작성 폼
+	@GetMapping("/write")
+	public String writeForm(HttpSession session) {
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		if (authUser == null) {
+			//	홈 화면으로 리다이렉트
+			return "redirect:/";
+		}
+		return "board/write";
+	}
+	
+	//	작성 액션
+	@PostMapping("/write")
+	public String writeAction(@ModelAttribute BoardVo boardVo,
+			HttpSession session) {
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		if (authUser == null) {
+			return "redirect:/";
+		}
+		
+		boardVo.setUserNo(authUser.getNo());	//	작성자 PK
+		boardService.write(boardVo);
+		
+		return "redirect:/board";
 	}
 }

@@ -8,8 +8,8 @@
 	SELECT seq_board_pk.nextval FROM dual
 	</selectKey>
 	<![CDATA[
-	INSERT INTO board (no, content, hit, reg_date, user_no) 
-	VALUES(#{no}, #{content}, 0, sysdate, #{userNo})
+	INSERT INTO board (no, title, content, hit, reg_date, user_no) 
+	VALUES(#{no}, #{title}, #{content}, 0, sysdate, #{userNo})
 	]]>
 	</insert>
 	

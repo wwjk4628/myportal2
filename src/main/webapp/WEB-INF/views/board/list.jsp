@@ -52,7 +52,7 @@
 
 
 					<tr>
-						<td colspan="6"><a href="">글쓰기</a></td>
+						<td colspan="6"><a href="<c:url value="/board/write" />">글쓰기</a></td>
 					</tr>
 				</table>
 				<!-- /Content -->
