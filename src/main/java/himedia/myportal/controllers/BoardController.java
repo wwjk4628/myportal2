@@ -76,4 +76,35 @@ public class BoardController {
 		
 		return "redirect:/board";
 	}
+	
+	//	편집 폼
+	@GetMapping("/{no}/modify")
+	public String modifyForm(@PathVariable("no") Long no, Model model,
+			HttpSession session) {
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		if (authUser == null) {
+			return "redirect:/";
+		}
+		BoardVo vo = boardService.getContent(no);
+		model.addAttribute("vo", vo);
+		return "board/modify";
+	}
+	
+	//	편집 액션
+	@PostMapping("/modify")
+	public String modifyAction(@ModelAttribute BoardVo updatedVo,
+			HttpSession session) {
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		if (authUser == null) {
+			return "redirect:/";
+		}
+		//	기존 게시물 받아오기
+		BoardVo vo = boardService.getContent(updatedVo.getNo());
+		vo.setTitle(updatedVo.getTitle());
+		vo.setContent(updatedVo.getContent());
+		
+		boolean success = boardService.update(vo);
+		
+		return "redirect:/board";
+	}
 }

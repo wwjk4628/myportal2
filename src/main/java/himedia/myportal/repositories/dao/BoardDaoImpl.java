@@ -42,8 +42,13 @@ public class BoardDaoImpl implements BoardDao {
 
 	@Override
 	public int update(BoardVo boardVo) {
-		// TODO Auto-generated method stub
-		return 0;
+		try {
+			int updatedCount = sqlSession.update("board.update", boardVo);
+			return updatedCount;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new BoardDaoException("게시물 업데이트 도중 예외 발생!", boardVo);
+		}
 	}
 
 	@Override

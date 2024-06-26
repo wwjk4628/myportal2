@@ -24,6 +24,7 @@
 		u.name as userName
 	FROM board b, users u
 	WHERE b.user_no = u.no
+	ORDER BY b.reg_date DESC
 	</select>
 	
 	<!-- 게시물 읽기 -->

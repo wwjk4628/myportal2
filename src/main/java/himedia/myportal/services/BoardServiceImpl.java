@@ -34,8 +34,8 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public boolean update(BoardVo boardVo) {
-		// TODO Auto-generated method stub
-		return false;
+		int updatedCount = boardDao.update(boardVo);
+		return updatedCount == 1;
 	}
 
 }

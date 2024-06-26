@@ -46,7 +46,14 @@
 							<td>${vo.userName }</td>
 							<td>${vo.hit }</td>
 							<td>${vo.regDate }</td>
-							<td><a href="">삭제</a></td>
+							<td>
+							<c:if test="${not empty authUser }">
+								<c:if test="${authUser.no == vo.userNo }">
+									<a href="<c:url value="/board/${vo.no }/modify" />">수정</a> 
+									<a href="<c:url value="/board/${vo.no }/delete" />">삭제</a>
+								</c:if>
+							</c:if>
+							</td>
 						</tr>
 					</c:forEach>
 
