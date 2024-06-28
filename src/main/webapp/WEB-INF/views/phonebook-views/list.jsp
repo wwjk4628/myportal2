@@ -10,8 +10,8 @@
 <body>
 
 	<h2>주소록 Web</h2>
-	<h3>목록 (검색어: )</h3>
-	<form id="search-form" method="POST" action="<c:url value="/phonebook/search" />">
+	<h3>목록 (검색어:)</h3>
+	<form id="search-form" method="get" action="<c:url value="/phonebook/search" />">
 
 		<label for="keyword">검색어</label> <input type="text" name="keyword">
 		<input type="submit" value="검색">

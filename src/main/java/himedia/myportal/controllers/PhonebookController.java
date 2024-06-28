@@ -48,10 +48,11 @@ public class PhonebookController {
 		return "redirect:/phonebook";
 	}
 	
-	@PostMapping("/search")
+	@GetMapping("/search")
 	public String search(@RequestParam("keyword") String name,  Model model) {
 		List<PhonebookVo> list = phonebookService.getSearchList(name);
 		 model.addAttribute("list", list);
+		 System.out.println(name);
 		return "phonebook-views/list";
 	}
 	
