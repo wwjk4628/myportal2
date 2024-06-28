@@ -19,6 +19,7 @@ public class GuestbookDaoImpl implements GuestbookDao {
 	@Override
 	public List<GuestbookVo> selectAll() {
 		List<GuestbookVo> list = sqlSession.selectList("guestbook.selectAll");
+		System.out.println(list);
 		return list;
 	}
 
