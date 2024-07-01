@@ -46,15 +46,20 @@
 							<td>${vo.userName }</td>
 							<td>${vo.hit }</td>
 							<td>${vo.regDate }</td>
-							<td>
-							<c:if test="${not empty authUser }">
-								<c:if test="${authUser.no == vo.userNo }">
-									<a href="<c:url value="/board/${vo.no }/modify" />">수정</a> 
-									<a href="<c:url value="/board/${vo.no }/delete" />">삭제</a>
-								</c:if>
-							</c:if>
-							</td>
+							<td><c:if test="${not empty authUser }">
+									<c:if test="${authUser.no == vo.userNo }">
+										<a href="<c:url value="/board/${vo.no }/modify" />">수정</a>
+										<a href="<c:url value="/board/${vo.no }/delete" />">삭제</a>
+									</c:if>
+								</c:if></td>
 						</tr>
+						<c:if test="false">
+							<tr>
+								<td colspan="6"><img
+									src="<c:url value="/upload-images/${imgFilename }" />"
+									style="width: 100%; height: 100%;" /></td>
+							</tr>
+						</c:if>
 					</c:forEach>
 
 
