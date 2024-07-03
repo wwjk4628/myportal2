@@ -43,7 +43,7 @@ public class FileUploadController {
 		return "fileupload/result";
 	}
 	
-	@GetMapping("/list")
+	@PostMapping("/list")
 	public String view(Model model) {
 		List<FileVo> list = fileUploadService.getMessageList();
 		System.out.println("con" + list);

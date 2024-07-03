@@ -1,10 +1,14 @@
 package himedia.myportal.controllers;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import himedia.myportal.repositories.vo.UserVo;
 import himedia.myportal.services.UserService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 @RequestMapping("/users")
 @Controller
@@ -24,14 +29,26 @@ public class UsersController {
 	
 	//	가입 폼
 	@GetMapping({"", "/", "/join"})
-	public String join() {
+	public String join(@ModelAttribute UserVo userVo) {
 		return "users/joinform";
 	}
 	
 	//	가입 처리(액션)
 	@PostMapping("/join")
-	public String join(@ModelAttribute UserVo userVo) {
+	public String join(@ModelAttribute @Valid UserVo userVo,
+			BindingResult result,
+			Model model
+			) {
 		System.out.println("회원 가입 폼: " + userVo);
+		if (result.hasErrors()) {
+			List<ObjectError> list = result.getAllErrors();
+			for (ObjectError e: list) {
+				System.err.println("Erroe: " + e);
+			}
+			model.addAllAttributes(result.getModel());
+//			return "redirect:/users/join";
+			return "users/joinform";
+		}
 		
 		boolean success = userService.join(userVo);
 		if (success) { //	가입 성공
@@ -84,6 +101,7 @@ public class UsersController {
 			//	홈페이지로 이동
 			return "redirect:/";
 		} else {
+			System.out.println("이메일 혹은 비밀번호 틀림");
 			return "redirect:/users/login";
 		}
 	}

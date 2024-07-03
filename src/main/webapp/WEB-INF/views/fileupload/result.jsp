@@ -24,9 +24,7 @@
 		<div id="wrapper">
 			<div id="content">
 				<img src="<c:url value="/upload-images/${imgFilename }" />" style="width: 100%; height: 100%;" />
-				<img src="<c:url value="/upload-images/${imgFilename }" />" style="width: 100%; height: 100%;" />
-
-			</div>
+				</div>
 		</div>
 
 		<!-- footer include -->

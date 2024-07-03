@@ -25,8 +25,8 @@ public class FileDaoImpl implements FileDao{
 
 	@Override
 	public int insert(FileVo fileVo) {
-		// TODO Auto-generated method stub
-		return 0;
+		int insertedCount = sqlSession.insert("file.insert", fileVo);
+		return insertedCount;
 	}
 
 	@Override

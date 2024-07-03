@@ -25,16 +25,16 @@
 			<div id="content">
 
 				<!-- Content -->
-			
 
-					<c:forEach items="${list }" var="vo">
 
-							<p>${vo.no }</p>
-							<p>${vo.originalName }</p>
-							<p>${vo.saveName }</p>
-						
-					</c:forEach>
-				
+				<c:forEach items="${list }" var="vo">
+					<h3>${vo.no }</h3>
+					<h3>${vo.originalName }</h3>
+					<img src="<c:url value="/upload-images/${vo.saveName }" />"
+						style="width: 100%; height: 100%;" />
+
+				</c:forEach>
+
 				<!-- /Content -->
 
 			</div>

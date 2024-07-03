@@ -25,13 +25,15 @@ public class FileUploadService {
 //		확장자 분리
 		String extName = originalFilename.substring(originalFilename.lastIndexOf("."));
 		String saveFilename = getSaveFilename(extName);
-
 		System.out.println("New Filename: " + saveFilename);
 		try {
 			writeFile(multipartFile, saveFilename);
+			
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+		FileVo vo = new FileVo(originalFilename, saveFilename);
+		fileDao.insert(vo);
 		
 		return saveFilename;
 	}

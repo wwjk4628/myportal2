@@ -30,7 +30,7 @@
 					<label>File</label> <input type="file" name="file1" /> <input
 						type="submit" value="upload" />
 				</form>
-				<form method="post" action="<c:url value="/fileupload/upload"/>">
+				<form method="post" action="<c:url value="/fileupload/list"/>">
 					<input type="submit" value="리스트">
 				</form>
 	
